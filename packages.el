@@ -14,9 +14,13 @@
             company-c-headers
             company-irony
             company-quickhelp
+	    company-rtags
+	    flycheck
+	    flycheck-rtags
 	    powerline
 	    neotree
             magit
+	    rtags
             ))
 ; activate all the packages
 (package-initialize)
