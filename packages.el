@@ -20,6 +20,7 @@
 	    powerline
 	    neotree
             magit
+	    org-bullets
 	    rtags
             ))
 ; activate all the packages

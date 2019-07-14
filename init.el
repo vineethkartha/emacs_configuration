@@ -1,4 +1,5 @@
-;;;; loads the different libraries to set up Emacs accordingly
+;;; init --- This package is meant to initialise the emacs setup
+;;loads the different libraries to set up Emacs accordingly
 
 ;; load the library that sets up package repositories and syncing
 (load-library "packages")
@@ -13,6 +14,10 @@
 ;; KeyBindings
 (global-set-key (kbd "<f8>") 'neotree-toggle) 
 (powerline-default-theme)
+
+;; Org related
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(setq org-ellipsis " ⬎")
 
 ;; RTAGS
 (defun setup-flycheck-rtags ()
