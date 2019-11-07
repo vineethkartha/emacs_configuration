@@ -1,9 +1,7 @@
-(package-initialize)
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/"))
+	     '("melpa" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
 	     '("org" . "http://orgmode.org/elpa/"))
-
 ;;; set up package syncing to allow for syncing between different machines
 
 ;; list of packages to sync
@@ -22,6 +20,8 @@
             magit
 	    org-bullets
 	    rtags
+	    fold-this
+	    srefactor
             ))
 ; activate all the packages
 (package-initialize)

@@ -17,7 +17,10 @@
 
 ;; Org related
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(setq org-ellipsis " ⬎")
+(setq org-ellipsis " ⤵")
+(org-babel-do-load-languages
+ 'org-babel-load-languages '((C . t) (shell . t)))
+
 
 ;; RTAGS
 (defun setup-flycheck-rtags ()
@@ -53,3 +56,23 @@
   (require 'flycheck-rtags)
   ;; c-mode-common-hook is also called by c++-mode
   (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
+
+
+;;ORG presentaiont
+(add-to-list 'load-path "~/org-html5presentation.el")
+(require 'ox-html5presentation)
+(setq org-image-actual-width nil)
+
+;; Srefactor
+(require 'srefactor)
+(require 'srefactor-lisp)
+
+;; OPTIONAL: ADD IT ONLY IF YOU USE C/C++. 
+(semantic-mode 1) ;; -> this is optional for Lisp
+
+(define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(global-set-key (kbd "M-RET o") 'srefactor-lisp-one-line)
+(global-set-key (kbd "M-RET m") 'srefactor-lisp-format-sexp)
+(global-set-key (kbd "M-RET d") 'srefactor-lisp-format-defun)
+(global-set-key (kbd "M-RET b") 'srefactor-lisp-format-buffer)
