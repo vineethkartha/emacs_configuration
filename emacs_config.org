@@ -3,6 +3,10 @@
 #+LANGUAGE: en
 #+PROPERTY: results silent
 
+The ~/.emacs file needs to have the following lines
+(require 'org)
+(org-babel-load-file "~/.emacs_config/emacs_config.org") 
+
 * Remove startup welcome screen
   The code block below toggle off the welcome startup screen.
   #+BEGIN_SRC emacs-lisp
