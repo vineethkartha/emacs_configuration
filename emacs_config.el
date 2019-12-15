@@ -17,6 +17,8 @@
     ace-window
     org-bullets
     powerline
+    which-key
+    dashboard
     )
   )
 
@@ -100,4 +102,25 @@
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq org-ellipsis "->")
 (org-babel-do-load-languages
-'org-babel-load-languages '((C . t) (shell . t)))
+ 'org-babel-load-languages '(
+			     (C . t)
+			     (shell . t)
+			     (emacs-lisp . t)
+			     (plantuml . t)
+			     )
+ )
+
+(setq org-todo-keywords 
+      '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
+	("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
+
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+;; Or if you use use-package
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
