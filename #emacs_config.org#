@@ -6,7 +6,6 @@
 The ~/.emacs file needs to have the following lines
 (require 'org)
 (org-babel-load-file "~/.emacs_config/emacs_config.org") 
-
 * Install Packages
   #+BEGIN_SRC emacs-lisp
     (require 'package)
