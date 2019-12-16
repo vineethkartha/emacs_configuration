@@ -29,6 +29,7 @@ The ~/.emacs file needs to have the following lines
 	powerline
 	which-key
 	dashboard
+	linum-relative
 	)
       )
 
@@ -146,8 +147,6 @@ The ~/.emacs file needs to have the following lines
 	     ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
 
    #+END_SRC 
-
-
 
 * Emacs startup dashboard
   #+BEGIN_SRC emacs-lisp 

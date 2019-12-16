@@ -19,6 +19,7 @@
     powerline
     which-key
     dashboard
+    linum-relative
     )
   )
 
@@ -124,3 +125,5 @@
   :ensure t
   :config
   (dashboard-setup-startup-hook))
+
+
