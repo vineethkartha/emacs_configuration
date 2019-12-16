@@ -1,9 +1,9 @@
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
-	     '("melpa" . "https://stable.melpa.org/packages/"))
+             '("melpa" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
-	     '("org" . "http://orgmode.org/elpa/"))
+             '("org" . "http://orgmode.org/elpa/"))
 
 (package-initialize)
 (when (not package-archive-contents)  
@@ -11,40 +11,34 @@
 
 (defvar my-packages
   '(
+    company
+    company-irony
+    dashboard
     use-package
-    elpy
     flycheck
     ace-window
     org-bullets
     powerline
     which-key
-    dashboard
     linum-relative
+    plantuml-mode
     )
   )
-
 (dolist (pkg my-packages)
   (unless (package-installed-p pkg)
-    (package-install pkg)))
+    (message "Installing %s ..." pkg)
+    (condition-case nil
+        (package-install pkg)
+      (error (warn "Failed to install %s ..." pkg)))
+    ))
 
 (defun enable-flycheck()
   (flycheck-mode 1)
   )
 
 (defun set-local-key-for-hs-mode()
-  (hs-minor-mode 1)
+  (hs-minor-mode 1)                     
   (local-set-key (kbd "M-;") 'hs-toggle-hiding)
-  )
-
-(defun copy-line-above ()
-  (interactive)
-  (previous-line)
-  (setq line (buffer-substring-no-properties
-	      (line-beginning-position)
-	      (line-end-position))
-	)
-  (next-line)
-  (insert line)
   )
 
 (global-linum-mode 1)
@@ -84,14 +78,14 @@
   (add-hook 'c-mode-hook 'company-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode)
   )
-  (add-hook 'c++-mode-hook (
-		   lambda()
-			 (enable-flycheck)
-			 (set-local-key-for-hs-mode)
-			 ))
+(add-hook 'c++-mode-hook (
+                          lambda()
+                                (enable-flycheck)
+                                (set-local-key-for-hs-mode)
+                                ))
 
-(elpy-enable)
-(setq elpy-rpc-virtualenv-path 'current)
+;(elpy-enable)
+;(setq elpy-rpc-virtualenv-path 'current)
 
 (use-package ace-window
   :ensure t
@@ -99,6 +93,9 @@
   (global-set-key (kbd "M-o") 'ace-window)
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   )
+
+(global-set-key (kbd "M-n") 'switch-to-next-buffer)
+(global-set-key (kbd "M-p") 'switch-to-prev-buffer)
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq org-ellipsis "->")
@@ -111,19 +108,47 @@
 			     )
  )
 
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-window-setup (quote current-window))
+;;warn me of any deadlines in next 7 days
+(setq org-deadline-warning-days 7)
+;;show me tasks scheduled or due in next fortnight
+(setq org-agenda-span (quote fortnight))
+;;don't show tasks as scheduled if they are already shown as a deadline
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t)
+;;sort tasks in order of when they are due and then by priority
+(setq org-agenda-sorting-strategy
+      (quote
+       ((agenda deadline-up priority-down)
+        (todo priority-down category-keep)
+        (tags priority-down category-keep)
+        (search category-keep))))
+(setq org-image-actual-width nil)
+
+(setq org-plantuml-jar-path "~/Tools/plantuml.jar")
+
 (setq org-todo-keywords 
       '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
 
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
-	("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
+        ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
+(global-set-key (kbd "C-c 2") (lambda() (interactive)(find-file "~/orgmode/todo.org")))
 
-(require 'dashboard)
-(dashboard-setup-startup-hook)
-;; Or if you use use-package
+(global-set-key (kbd "C-c 1") 'add-todo-date)
+
 (use-package dashboard
   :ensure t
   :config
   (dashboard-setup-startup-hook))
 
+(load-file "~/emacs_configuration/helper-scripts.el")
+(global-set-key (kbd "C-c d") 'delete-word)
 
+(add-to-list 'auto-mode-alist '("\\.uml\\'" . plantuml-mode))
+(setq plantuml-jar-path "~/Tools/plantuml.jar")
+(setq plantuml-output-type "png")
+(global-set-key (kbd "C-c s") 'plantuml-save-to-file)
+(global-set-key [f7] 'delete-org-plantuml-file)

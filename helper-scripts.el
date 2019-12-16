@@ -38,7 +38,30 @@
   (message "%s" (thing-at-point 'filename))
   (setq fname (thing-at-point 'filename))
   (delete-file fname)
-  (setq thing-at-point-file-name-chars "-~/[:alnum:]_.${}#%,:")
-  (kill-thingatpoint 'filename)
+  (kill-whole-line)
   )
+
+(defun copy-line-above (num)
+  "Copy the line from above the current cursor position"
+  (interactive)
+  (save-excursion
+    (previous-line)
+    (setq line (buffer-substring-no-properties
+                (line-beginning-position)
+                (line-end-position))
+          )
+    (next-line)
+    (insert line)
+    
+    )
+  )
+
+(defun delete-word ()
+  "Delete the word under the cursor. This reduces the strokes M-b , M-d"
+  (interactive)
+  (message "%s" (thing-at-point 'symbol))
+  (kill-thingatpoint 'symbol)
+  )
+
+
 
