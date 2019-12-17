@@ -35,10 +35,6 @@
       (error (warn "Failed to install %s ..." pkg)))
     ))
 
-(setq inhibit-startup-message t)
-(org-agenda-list 1)
-(switch-to-buffer "*Org Agenda*")
-
 (defun enable-flycheck()
   (flycheck-mode 1)
   )
@@ -185,3 +181,7 @@
 (setq vc-make-backup-files t)
 
 (load-theme 'dracula)
+
+(setq inhibit-startup-message t)
+(org-agenda-list 1)
+(switch-to-buffer "*Org Agenda*")

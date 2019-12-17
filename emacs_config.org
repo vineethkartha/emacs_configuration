@@ -44,12 +44,6 @@
           (error (warn "Failed to install %s ..." pkg)))
         ))
   #+END_SRC
-* A Welcome message
-  #+BEGIN_SRC emacs-lisp 
-    (setq inhibit-startup-message t)
-    (org-agenda-list 1)
-    (switch-to-buffer "*Org Agenda*")
-  #+END_SRC 
 * Helper Functions
   #+BEGIN_SRC emacs-lisp
     (defun enable-flycheck()
@@ -235,4 +229,11 @@
 * Theme Settings
   #+BEGIN_SRC emacs-lisp 
     (load-theme 'dracula)
+  #+END_SRC 
+* A Welcome message
+  This section should come after all the org setups
+  #+BEGIN_SRC emacs-lisp 
+    (setq inhibit-startup-message t)
+    (org-agenda-list 1)
+    (switch-to-buffer "*Org Agenda*")
   #+END_SRC 
