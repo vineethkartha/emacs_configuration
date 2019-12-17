@@ -1,6 +1,6 @@
 (setq inhibit-startup-message t)
 (defun display-startup-echo-area-message ()
-  "The message that is shown after ¡®user-init-file¡¯ is loaded."
+  "The message that is shown after user-init-file is loaded."
   (message
    (concat "Welcome "      user-full-name
 	   "! Emacs "      emacs-version
@@ -173,3 +173,15 @@
 (setq plantuml-output-type "png")
 (global-set-key (kbd "C-c s") 'plantuml-save-to-file)
 (global-set-key [f7] 'delete-org-plantuml-file)
+
+;; New location for backups.
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+;; Never silently delete old backups.
+(setq delete-old-versions -1)
+
+;; Use version numbers for backup files.
+(setq version-control t)
+
+;; Even version controlled files get to be backed up.
+(setq vc-make-backup-files t)

@@ -218,3 +218,18 @@
     (global-set-key (kbd "C-c s") 'plantuml-save-to-file)
     (global-set-key [f7] 'delete-org-plantuml-file)
   #+END_SRC
+* Backup files
+  Emacs keeps backup of files edited with a ~ character.
+  #+BEGIN_SRC emacs-lisp 
+    ;; New location for backups.
+    (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+    ;; Never silently delete old backups.
+    (setq delete-old-versions -1)
+
+    ;; Use version numbers for backup files.
+    (setq version-control t)
+
+    ;; Even version controlled files get to be backed up.
+    (setq vc-make-backup-files t)
+  #+END_SRC 
