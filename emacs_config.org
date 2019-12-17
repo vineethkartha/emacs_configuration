@@ -5,7 +5,24 @@
   2. The ~/.emacs file needs to have the following lines
      (require 'org)
      (org-babel-load-file "<path to downloaded scripts>/emacs_configuration/emacs_config.org") 
-   
+* A Welcome message
+  #+BEGIN_SRC emacs-lisp 
+    (setq inhibit-startup-message t)
+    (defun display-startup-echo-area-message ()
+      "The message that is shown after ¡®user-init-file¡¯ is loaded."
+      (message
+       (concat "Welcome "      user-full-name
+	       "! Emacs "      emacs-version
+	       "; Org-mode "   org-version
+	       "; System "    (system-name)
+	       (format "; Time %.3fs"
+		       (float-time (time-subtract (current-time)
+						  before-init-time)))
+	       )
+       )
+      )
+
+  #+END_SRC 
 * Install Packages
   #+BEGIN_SRC emacs-lisp
     (require 'package)
@@ -58,8 +75,10 @@
   #+BEGIN_SRC emacs-lisp
     (global-linum-mode 1)
     (global-visual-line-mode 1)
+    (global-hl-line-mode t)
     (ido-mode 1)
     (electric-pair-mode 1)
+    (setq visible-bell 1)
     (use-package powerline
       :ensure t
       :config

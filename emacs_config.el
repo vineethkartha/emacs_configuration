@@ -1,3 +1,18 @@
+(setq inhibit-startup-message t)
+(defun display-startup-echo-area-message ()
+  "The message that is shown after ¡®user-init-file¡¯ is loaded."
+  (message
+   (concat "Welcome "      user-full-name
+	   "! Emacs "      emacs-version
+	   "; Org-mode "   org-version
+	   "; System "    (system-name)
+	   (format "; Time %.3fs"
+		   (float-time (time-subtract (current-time)
+					      before-init-time)))
+	   )
+   )
+  )
+
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
@@ -44,8 +59,10 @@
 
 (global-linum-mode 1)
 (global-visual-line-mode 1)
+(global-hl-line-mode t)
 (ido-mode 1)
 (electric-pair-mode 1)
+(setq visible-bell 1)
 (use-package powerline
   :ensure t
   :config
