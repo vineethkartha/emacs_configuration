@@ -9,7 +9,7 @@
   #+BEGIN_SRC emacs-lisp 
     (setq inhibit-startup-message t)
     (defun display-startup-echo-area-message ()
-      "The message that is shown after ¡®user-init-file¡¯ is loaded."
+      "The message that is shown after user-init-file is loaded."
       (message
        (concat "Welcome "      user-full-name
 	       "! Emacs "      emacs-version
