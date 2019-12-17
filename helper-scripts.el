@@ -41,7 +41,7 @@
   (kill-whole-line)
   )
 
-(defun copy-line-above (num)
+(defun copy-line-above ()
   "Copy the line from above the current cursor position"
   (interactive)
   (save-excursion
@@ -52,7 +52,6 @@
           )
     (next-line)
     (insert line)
-    
     )
   )
 
@@ -63,5 +62,17 @@
   (kill-thingatpoint 'symbol)
   )
 
-
-
+(defun toggle-rel-linum()
+  "Toggle the relative line numbering"
+  (interactive)
+  (if (bound-and-true-p linum-mode)
+    (progn
+      (linum-relative-toggle)
+      (if (bound-and-true-p linum-mode)
+          nil
+        (linum-mode))
+      )
+    (progn
+      (linum-mode))
+      )
+  )

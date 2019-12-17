@@ -22,6 +22,7 @@
     which-key
     linum-relative
     plantuml-mode
+    sos
     )
   )
 (dolist (pkg my-packages)
@@ -42,6 +43,7 @@
   )
 
 (global-linum-mode 1)
+(global-visual-line-mode 1)
 (ido-mode 1)
 (electric-pair-mode 1)
 (use-package powerline
@@ -101,12 +103,13 @@
 (setq org-ellipsis "->")
 (org-babel-do-load-languages
  'org-babel-load-languages '(
-			     (C . t)
-			     (shell . t)
-			     (emacs-lisp . t)
-			     (plantuml . t)
-			     )
+                             (C . t)
+                             (shell . t)
+                             (emacs-lisp . t)
+                             (plantuml . t)
+                             )
  )
+(setq org-hide-emphasis-markers t)
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -146,6 +149,7 @@
 
 (load-file "~/emacs_configuration/helper-scripts.el")
 (global-set-key (kbd "C-c d") 'delete-word)
+(global-set-key (kbd "C-c r") 'toggle-rel-linum)
 
 (add-to-list 'auto-mode-alist '("\\.uml\\'" . plantuml-mode))
 (setq plantuml-jar-path "~/Tools/plantuml.jar")
