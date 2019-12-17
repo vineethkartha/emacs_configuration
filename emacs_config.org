@@ -5,24 +5,6 @@
   2. The ~/.emacs file needs to have the following lines
      (require 'org)
      (org-babel-load-file "<path to downloaded scripts>/emacs_configuration/emacs_config.org") 
-* A Welcome message
-  #+BEGIN_SRC emacs-lisp 
-    (setq inhibit-startup-message t)
-    (defun display-startup-echo-area-message ()
-      "The message that is shown after user-init-file is loaded."
-      (message
-       (concat "Welcome "      user-full-name
-	       "! Emacs "      emacs-version
-	       "; Org-mode "   org-version
-	       "; System "    (system-name)
-	       (format "; Time %.3fs"
-		       (float-time (time-subtract (current-time)
-						  before-init-time)))
-	       )
-       )
-      )
-
-  #+END_SRC 
 * Install Packages
   #+BEGIN_SRC emacs-lisp
     (require 'package)
@@ -51,7 +33,7 @@
         plantuml-mode
         sos
 	solarized-theme
-	dracula
+	dracula-theme
         )
       )
     (dolist (pkg my-packages)
@@ -62,6 +44,12 @@
           (error (warn "Failed to install %s ..." pkg)))
         ))
   #+END_SRC
+* A Welcome message
+  #+BEGIN_SRC emacs-lisp 
+    (setq inhibit-startup-message t)
+    (org-agenda-list 1)
+    (switch-to-buffer "*Org Agenda*")
+  #+END_SRC 
 * Helper Functions
   #+BEGIN_SRC emacs-lisp
     (defun enable-flycheck()
@@ -199,6 +187,15 @@
      (global-set-key (kbd "C-c 1") 'add-todo-date)
    #+END_SRC 
 
+** ORG emphasis markers added to electric pair
+   #+BEGIN_SRC emacs-lisp 
+     (setq electric-pair-pairs
+	   '(
+	     (?~ . ?~)
+	     (?* . ?*)
+	     (?/ . ?/)
+	     ))
+   #+END_SRC 
 * Emacs startup dashboard
   #+BEGIN_SRC emacs-lisp
     (use-package dashboard

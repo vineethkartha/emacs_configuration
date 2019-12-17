@@ -1,18 +1,3 @@
-(setq inhibit-startup-message t)
-(defun display-startup-echo-area-message ()
-  "The message that is shown after user-init-file is loaded."
-  (message
-   (concat "Welcome "      user-full-name
-	   "! Emacs "      emacs-version
-	   "; Org-mode "   org-version
-	   "; System "    (system-name)
-	   (format "; Time %.3fs"
-		   (float-time (time-subtract (current-time)
-					      before-init-time)))
-	   )
-   )
-  )
-
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
@@ -39,6 +24,7 @@
     plantuml-mode
     sos
     solarized-theme
+    dracula-theme
     )
   )
 (dolist (pkg my-packages)
@@ -48,6 +34,10 @@
         (package-install pkg)
       (error (warn "Failed to install %s ..." pkg)))
     ))
+
+(setq inhibit-startup-message t)
+(org-agenda-list 1)
+(switch-to-buffer "*Org Agenda*")
 
 (defun enable-flycheck()
   (flycheck-mode 1)
@@ -159,6 +149,13 @@
 (global-set-key (kbd "C-c 2") (lambda() (interactive)(find-file "~/orgmode/todo.org")))
 
 (global-set-key (kbd "C-c 1") 'add-todo-date)
+
+(setq electric-pair-pairs
+      '(
+	(?~ . ?~)
+	(?* . ?*)
+	(?/ . ?/)
+	))
 
 (use-package dashboard
   :ensure t
