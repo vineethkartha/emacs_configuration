@@ -38,6 +38,7 @@
     linum-relative
     plantuml-mode
     sos
+    solarized-theme
     )
   )
 (dolist (pkg my-packages)
@@ -185,3 +186,5 @@
 
 ;; Even version controlled files get to be backed up.
 (setq vc-make-backup-files t)
+
+(load-theme 'dracula)
