@@ -170,12 +170,18 @@
      (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
      ;;sort tasks in order of when they are due and then by priority
      (setq org-agenda-sorting-strategy
-           (quote
-            ((agenda deadline-up priority-down)
-             (todo priority-down category-keep)
-             (tags priority-down category-keep)
-             (search category-keep))))
+	   (quote
+	    ((agenda deadline-up priority-down)
+	     (todo priority-down category-keep)
+	     (tags priority-down category-keep)
+	     (search category-keep))))
      (setq org-image-actual-width nil)
+     (setq org-agenda-custom-commands
+	   `(("W" "Weekly Status" 
+	      tags (concat "+TODO=\"DONE\""
+			   "+CLOSED>=\"<-7d>\""
+			   "+CLOSED<\"<today>\""))))
+
    #+END_SRC 
 ** ORG PlantUML settings
    #+BEGIN_SRC emacs-lisp 

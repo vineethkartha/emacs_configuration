@@ -129,24 +129,29 @@
  )
 (setq org-hide-emphasis-markers t)
 
-;     (global-set-key "\C-cl" 'org-store-link)
-;     (global-set-key "\C-ca" 'org-agenda)
-;     (setq org-agenda-skip-scheduled-if-done t)
-;     (setq org-agenda-window-setup (quote current-window))
-;     ;;warn me of any deadlines in next 7 days
-;     (setq org-deadline-warning-days 7)
-;     ;;show me tasks scheduled or due in next fortnight
-;     (setq org-agenda-span (quote fortnight))
-;     ;;don't show tasks as scheduled if they are already shown as a deadline
-;     (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
-;     ;;sort tasks in order of when they are due and then by priority
-;     (setq org-agenda-sorting-strategy
-;           (quote
-;            ((agenda deadline-up priority-down)
-;             (todo priority-down category-keep)
-;             (tags priority-down category-keep)
-;             (search category-keep))))
-;     (setq org-image-actual-width nil)
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-window-setup (quote current-window))
+;;warn me of any deadlines in next 7 days
+(setq org-deadline-warning-days 7)
+;;show me tasks scheduled or due in next fortnight
+(setq org-agenda-span (quote fortnight))
+;;don't show tasks as scheduled if they are already shown as a deadline
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t)
+;;sort tasks in order of when they are due and then by priority
+(setq org-agenda-sorting-strategy
+      (quote
+       ((agenda deadline-up priority-down)
+	(todo priority-down category-keep)
+	(tags priority-down category-keep)
+	(search category-keep))))
+(setq org-image-actual-width nil)
+(setq org-agenda-custom-commands
+      `(("W" "Weekly Status" 
+	 tags (concat "+TODO=\"DONE\""
+		      "+CLOSED>=\"<-7d>\""
+		      "+CLOSED<\"<today>\""))))
 
 (setq org-plantuml-jar-path "~/Tools/plantuml.jar")
 
