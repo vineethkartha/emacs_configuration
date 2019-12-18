@@ -1,39 +1,39 @@
 (require 'package)
-(package-initialize)
-(add-to-list 'package-archives
-             '("melpa" . "https://stable.melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/"))
+    (package-initialize)
+    (add-to-list 'package-archives
+                 '("melpa" . "https://stable.melpa.org/packages/"))
+    (add-to-list 'package-archives
+                 '("org" . "http://orgmode.org/elpa/"))
 
-(package-initialize)
-(when (not package-archive-contents)  
-  (package-refresh-contents))
+    (package-initialize)
+    (when (not package-archive-contents)  
+      (package-refresh-contents))
 
-(defvar my-packages
-  '(
-    company
-    company-irony
-    dashboard
-    use-package
-    flycheck
-    ace-window
-    org-bullets
-    powerline
-    which-key
-    linum-relative
-    plantuml-mode
-    sos
-    solarized-theme
-    dracula-theme
-    )
-  )
-(dolist (pkg my-packages)
-  (unless (package-installed-p pkg)
-    (message "Installing %s ..." pkg)
-    (condition-case nil
-        (package-install pkg)
-      (error (warn "Failed to install %s ..." pkg)))
-    ))
+    (defvar my-packages
+      '(
+        company
+        company-irony
+;        dashboard
+        use-package
+        flycheck
+        ace-window
+        org-bullets
+        powerline
+        which-key
+        linum-relative
+        plantuml-mode
+        sos
+	solarized-theme
+	dracula-theme
+        )
+      )
+    (dolist (pkg my-packages)
+      (unless (package-installed-p pkg)
+        (message "Installing %s ..." pkg)
+        (condition-case nil
+            (package-install pkg)
+          (error (warn "Failed to install %s ..." pkg)))
+        ))
 
 (defun enable-flycheck()
   (flycheck-mode 1)
@@ -42,6 +42,31 @@
 (defun set-local-key-for-hs-mode()
   (hs-minor-mode 1)                     
   (local-set-key (kbd "M-;") 'hs-toggle-hiding)
+  )
+
+(defun check-spacemacs-theme()
+  (if (file-exists-p "~/.emacs.d/themes/spacemacs-common.el")
+      (progn
+        (load-file "~/.emacs.d/themes/spacemacs-common.el")
+        t
+        )
+    (progn 
+      (message "Spacemacs theme not present")
+      nil
+      )
+    )
+  )
+
+(defun set-my-theme()
+  (if (check-spacemacs-theme)
+      (load-theme 'spacemacs-dark)
+    (progn
+      (if (featurep 'solarized-dark-theme)
+          (load-theme 'solarized-dark)
+        (message "No Interesting theme so sad")
+        )
+      )
+    )
   )
 
 (global-linum-mode 1)
@@ -57,27 +82,27 @@
   )
 
 (use-package company
-  :ensure t
-  :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2)
-  (setq global-company-mode 1))
+	 :ensure t
+	 :config
+	 (setq company-idle-delay 0)
+	 (setq company-minimum-prefix-length 2)
+	 (setq global-company-mode 1))
 
-(use-package company-irony
-  :ensure t
-  :config
-  (require 'company)
-  (add-to-list 'company-backends 'company-irony)
-  )
+       (use-package company-irony
+	 :ensure t
+	 :config
+	 (require 'company)
+	 (add-to-list 'company-backends 'company-irony)
+	 )
 
-;sudo apt-get install libclang-9-dev
-;M-x irony-install-server
-(use-package irony
-  :ensure t
-  :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+       ;sudo apt-get install libclang-9-dev
+       ;M-x irony-install-server
+       (use-package irony
+	 :ensure t
+	 :config
+;	 (add-hook 'c++-mode-hook 'irony-mode)
+;	 (add-hook 'c-mode-hook 'irony-mode)
+	 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
 (with-eval-after-load 'company
   (add-hook 'c++-mode-hook 'company-mode)
@@ -90,8 +115,8 @@
                                 (set-local-key-for-hs-mode)
                                 ))
 
-;(elpy-enable)
-;(setq elpy-rpc-virtualenv-path 'current)
+;       (elpy-enable)
+;       (setq elpy-rpc-virtualenv-path 'current)
 
 (use-package ace-window
   :ensure t
@@ -148,15 +173,15 @@
 
 (setq electric-pair-pairs
       '(
-	(?~ . ?~)
-	(?* . ?*)
-	(?/ . ?/)
-	))
+        (?~ . ?~)
+        (?* . ?*)
+        (?/ . ?/)
+        ))
 
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook))
+;    (use-package dashboard
+;      :ensure t
+;      :config
+;      (dashboard-setup-startup-hook))
 
 (load-file "~/emacs_configuration/helper-scripts.el")
 (global-set-key (kbd "C-c d") 'delete-word)
@@ -180,8 +205,8 @@
 ;; Even version controlled files get to be backed up.
 (setq vc-make-backup-files t)
 
-(load-theme 'dracula)
+(set-my-theme)
 
 (setq inhibit-startup-message t)
-(org-agenda-list 1)
+(add-hook 'after-init-hook '(lambda () (org-agenda-list 7)))
 (switch-to-buffer "*Org Agenda*")
