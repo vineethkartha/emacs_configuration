@@ -1,39 +1,40 @@
 (require 'package)
-    (package-initialize)
-    (add-to-list 'package-archives
-                 '("melpa" . "https://stable.melpa.org/packages/"))
-    (add-to-list 'package-archives
-                 '("org" . "http://orgmode.org/elpa/"))
+(package-initialize)
+(add-to-list 'package-archives
+             '("melpa" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("org" . "http://orgmode.org/elpa/"))
 
-    (package-initialize)
-    (when (not package-archive-contents)  
-      (package-refresh-contents))
+(package-initialize)
+(when (not package-archive-contents)  
+  (package-refresh-contents))
 
-    (defvar my-packages
-      '(
-        company
-        company-irony
-;        dashboard
-        use-package
-        flycheck
-        ace-window
-        org-bullets
-        powerline
-        which-key
-        linum-relative
-        plantuml-mode
-        sos
-	solarized-theme
-	dracula-theme
-        )
-      )
-    (dolist (pkg my-packages)
-      (unless (package-installed-p pkg)
-        (message "Installing %s ..." pkg)
-        (condition-case nil
-            (package-install pkg)
-          (error (warn "Failed to install %s ..." pkg)))
-        ))
+(defvar my-packages
+  '(
+    company
+    company-irony
+    dashboard
+    use-package
+    flycheck
+    ace-window
+    org-bullets
+    powerline
+    which-key
+    linum-relative
+    plantuml-mode
+    sos
+    htmlize
+    solarized-theme
+    dracula-theme
+    )
+  )
+(dolist (pkg my-packages)
+  (unless (package-installed-p pkg)
+    (message "Installing %s ..." pkg)
+    (condition-case nil
+        (package-install pkg)
+      (error (warn "Failed to install %s ..." pkg)))
+    ))
 
 (defun enable-flycheck()
   (flycheck-mode 1)
@@ -67,18 +68,6 @@
         )
       )
     )
-  )
-
-(global-linum-mode 1)
-(global-visual-line-mode 1)
-(global-hl-line-mode t)
-(ido-mode 1)
-(electric-pair-mode 1)
-(setq visible-bell 1)
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-default-theme)
   )
 
 (use-package company
@@ -115,8 +104,8 @@
                                 (set-local-key-for-hs-mode)
                                 ))
 
-;       (elpy-enable)
-;       (setq elpy-rpc-virtualenv-path 'current)
+(elpy-enable)
+(setq elpy-rpc-virtualenv-path 'current)
 
 (use-package ace-window
   :ensure t
@@ -166,9 +155,10 @@
 
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
-        ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
+	("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
 (global-set-key (kbd "C-c 2") (lambda() (interactive)(find-file "~/orgmode/todo.org")))
-
+(setq org-log-done t)
+(setq org-log-note t)
 (global-set-key (kbd "C-c 1") 'add-todo-date)
 
 (setq electric-pair-pairs
@@ -178,14 +168,15 @@
         (?/ . ?/)
         ))
 
-;    (use-package dashboard
-;      :ensure t
-;      :config
-;      (dashboard-setup-startup-hook))
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
 
 (load-file "~/emacs_configuration/helper-scripts.el")
 (global-set-key (kbd "C-c d") 'delete-word)
 (global-set-key (kbd "C-c r") 'toggle-rel-linum)
+(global-set-key (kbd "C-c j") 'copy-line-above)
 
 (add-to-list 'auto-mode-alist '("\\.uml\\'" . plantuml-mode))
 (setq plantuml-jar-path "~/Tools/plantuml.jar")
@@ -195,18 +186,26 @@
 
 ;; New location for backups.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-
 ;; Never silently delete old backups.
 (setq delete-old-versions -1)
-
 ;; Use version numbers for backup files.
 (setq version-control t)
-
 ;; Even version controlled files get to be backed up.
 (setq vc-make-backup-files t)
 
 (set-my-theme)
-
+(global-linum-mode 1)
+(global-visual-line-mode 1)
+(global-hl-line-mode t)
+(ido-mode 1)
+(electric-pair-mode 1)
+(setq visible-bell 1)
+(use-package powerline
+  :ensure t
+  :config
+  (powerline-default-theme)
+  )
+(set-face-background hl-line-face "slate gray")
 (setq inhibit-startup-message t)
 (add-hook 'after-init-hook '(lambda () (org-agenda-list 7)))
 (switch-to-buffer "*Org Agenda*")

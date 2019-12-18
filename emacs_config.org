@@ -32,6 +32,7 @@
         linum-relative
         plantuml-mode
         sos
+	htmlize
 	solarized-theme
 	dracula-theme
         )
@@ -80,20 +81,6 @@
         )
       )
       
-  #+END_SRC
-* Global Settings
-  #+BEGIN_SRC emacs-lisp
-    (global-linum-mode 1)
-    (global-visual-line-mode 1)
-    (global-hl-line-mode t)
-    (ido-mode 1)
-    (electric-pair-mode 1)
-    (setq visible-bell 1)
-    (use-package powerline
-      :ensure t
-      :config
-      (powerline-default-theme)
-      )
   #+END_SRC
 * Coding Environments
 ** Setting up company mode
@@ -197,13 +184,14 @@
 ** Todo List customisation
    #+BEGIN_SRC emacs-lisp 
      (setq org-todo-keywords 
-           '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+	   '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
 
      (setq org-todo-keyword-faces
-           '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
-             ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
+	   '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
+	     ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
      (global-set-key (kbd "C-c 2") (lambda() (interactive)(find-file "~/orgmode/todo.org")))
-
+     (setq org-log-done t)
+     (setq org-log-note t)
      (global-set-key (kbd "C-c 1") 'add-todo-date)
    #+END_SRC 
 
@@ -250,10 +238,22 @@
     ;; Even version controlled files get to be backed up.
     (setq vc-make-backup-files t)
   #+END_SRC 
-* Theme Settings
-  #+BEGIN_SRC emacs-lisp 
+* Global Settings
+  #+BEGIN_SRC emacs-lisp
     (set-my-theme)
-  #+END_SRC 
+    (global-linum-mode 1)
+    (global-visual-line-mode 1)
+    (global-hl-line-mode t)
+    (ido-mode 1)
+    (electric-pair-mode 1)
+    (setq visible-bell 1)
+    (use-package powerline
+      :ensure t
+      :config
+      (powerline-default-theme)
+      )
+    (set-face-background hl-line-face "slate gray")
+  #+END_SRC
 * A Welcome message
   This section should come after all the org setups
   #+BEGIN_SRC emacs-lisp 
@@ -261,3 +261,4 @@
     (add-hook 'after-init-hook '(lambda () (org-agenda-list 7)))
     (switch-to-buffer "*Org Agenda*")
   #+END_SRC 
+
