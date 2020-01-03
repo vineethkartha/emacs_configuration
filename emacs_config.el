@@ -134,10 +134,10 @@
 (global-set-key "\C-cc" 'org-capture)
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-window-setup (quote current-window))
-;;warn me of any deadlines in next 7 days
-(setq org-deadline-warning-days 7)
-;;show me tasks scheduled or due in next fortnight
-(setq org-agenda-span (quote fortnight))
+;;warn me of any deadlines in next 2 days
+(setq org-deadline-warning-days 2)
+;;show me tasks scheduled or due in next 7 day
+(setq org-agenda-span 7)
 ;;don't show tasks as scheduled if they are already shown as a deadline
 (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
 ;;sort tasks in order of when they are due and then by priority
@@ -154,7 +154,7 @@
                       "+CLOSED>=\"<-7d>\""
                       "+CLOSED<\"<today>\""))))
 (setq org-refile-targets
-      '((org-agenda-files :maxlevel . 3)))
+      '((org-agenda-files :maxlevel . 1)))
 
 (setq org-plantuml-jar-path "~/Tools/plantuml.jar")
 
