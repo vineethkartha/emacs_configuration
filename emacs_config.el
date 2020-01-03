@@ -1,40 +1,40 @@
 (require 'package)
-(package-initialize)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/"))
+    (package-initialize)
+    (add-to-list 'package-archives
+                 '("melpa" . "http://melpa.milkbox.net/packages/"))
+    (add-to-list 'package-archives
+                 '("org" . "http://orgmode.org/elpa/"))
 
-(package-initialize)
-(when (not package-archive-contents)  
-  (package-refresh-contents))
+    (package-initialize)
+    (when (not package-archive-contents)  
+      (package-refresh-contents))
 
-(defvar my-packages
-  '(
-    company
-    company-irony
-    dashboard
-    use-package
-    flycheck
-    ace-window
-    org-bullets
-    powerline
-    which-key
-    linum-relative
-    plantuml-mode
-    sos
-    htmlize
-    solarized-theme
-    dracula-theme
-    )
-  )
-(dolist (pkg my-packages)
-  (unless (package-installed-p pkg)
-    (message "Installing %s ..." pkg)
-    (condition-case nil
-        (package-install pkg)
-      (error (warn "Failed to install %s ..." pkg)))
-    ))
+    (defvar my-packages
+      '(
+        company
+        company-irony
+;        dashboard
+        use-package
+        flycheck
+        ace-window
+        org-bullets
+        powerline
+        which-key
+        linum-relative
+        plantuml-mode
+        sos
+	htmlize
+	solarized-theme
+	dracula-theme
+        )
+      )
+    (dolist (pkg my-packages)
+      (unless (package-installed-p pkg)
+        (message "Installing %s ..." pkg)
+        (condition-case nil
+            (package-install pkg)
+          (error (warn "Failed to install %s ..." pkg)))
+        ))
 
 (defun enable-flycheck()
   (flycheck-mode 1)
@@ -104,8 +104,8 @@
                                 (set-local-key-for-hs-mode)
                                 ))
 
-(elpy-enable)
-(setq elpy-rpc-virtualenv-path 'current)
+;     (elpy-enable)
+;     (setq elpy-rpc-virtualenv-path 'current)
 
 (use-package ace-window
   :ensure t
@@ -131,6 +131,7 @@
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-window-setup (quote current-window))
 ;;warn me of any deadlines in next 7 days
@@ -143,15 +144,17 @@
 (setq org-agenda-sorting-strategy
       (quote
        ((agenda deadline-up priority-down)
-	(todo priority-down category-keep)
-	(tags priority-down category-keep)
-	(search category-keep))))
+        (todo priority-down category-keep)
+        (tags priority-down category-keep)
+        (search category-keep))))
 (setq org-image-actual-width nil)
 (setq org-agenda-custom-commands
       `(("W" "Weekly Status" 
-	 tags (concat "+TODO=\"DONE\""
-		      "+CLOSED>=\"<-7d>\""
-		      "+CLOSED<\"<today>\""))))
+         tags (concat "+TODO=\"DONE\""
+                      "+CLOSED>=\"<-7d>\""
+                      "+CLOSED<\"<today>\""))))
+(setq org-refile-targets
+      '((org-agenda-files :maxlevel . 3)))
 
 (setq org-plantuml-jar-path "~/Tools/plantuml.jar")
 
@@ -160,11 +163,17 @@
 
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
-	("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
+        ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
 (global-set-key (kbd "C-c 2") (lambda() (interactive)(find-file "~/orgmode/todo.org")))
-(setq org-log-done t)
-(setq org-log-note t)
+(setq org-capture-templates '(("t" "Todo [inbox]" entry
+                               (file+headline "~/orgmode/gtd/inbox.org" "Tasks")
+                               "* TODO %i%?")
+                              ("T" "Tickler" entry
+                               (file+headline "~/orgmode/gtd/tickler.org" "Tickler")
+                               "* %i%? \n %U")))
 (global-set-key (kbd "C-c 1") 'add-todo-date)
+(setq org-log-done 'time)
+(setq org-log-done 'note)
 
 (setq electric-pair-pairs
       '(
@@ -173,10 +182,10 @@
         (?/ . ?/)
         ))
 
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook))
+;    (use-package dashboard
+;      :ensure t
+;      :config
+;      (dashboard-setup-startup-hook))
 
 (load-file "~/emacs_configuration/helper-scripts.el")
 (global-set-key (kbd "C-c d") 'delete-word)
@@ -213,5 +222,5 @@
 (set-face-background hl-line-face "ivory")
 
 (setq inhibit-startup-message t)
-(add-hook 'after-init-hook '(lambda () (org-agenda-list 7)))
+(add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
 (switch-to-buffer "*Org Agenda*")
