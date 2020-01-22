@@ -27,6 +27,7 @@
     linum-relative
     plantuml-mode
     sos
+    popup-kill-ring
     htmlize
     solarized-theme
     dracula-theme
@@ -74,39 +75,40 @@
     )
   )
 
-(use-package company
-    :ensure t
-    :config
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 2)
-    (setq global-company-mode 1))
+;(use-package company
+;    :ensure t
+;    :config
+;    (setq company-idle-delay 0)
+;    (setq company-minimum-prefix-length 2)
+;    (setq global-company-mode 1))
+;
+; (use-package company-irony
+;   :ensure t
+;   :config
+;   (require 'company)
+;   (add-to-list 'company-backends 'company-irony)
+;   )
+;
+;  ;sudo apt-get install libclang-9-dev
+;  ;M-x irony-install-server
+; (use-package irony
+;   :ensure t
+;   :config
+;   (add-hook 'c++-mode-hook 'irony-mode)
+;   (add-hook 'c-mode-hook 'irony-mode)
+;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
- (use-package company-irony
-   :ensure t
-   :config
-   (require 'company)
-   (add-to-list 'company-backends 'company-irony)
-   )
-
-  ;sudo apt-get install libclang-9-dev
-  ;M-x irony-install-server
- (use-package irony
-   :ensure t
-   :config
-   (add-hook 'c++-mode-hook 'irony-mode)
-   (add-hook 'c-mode-hook 'irony-mode)
-   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
-(with-eval-after-load 'company
-  (add-hook 'c++-mode-hook 'company-mode)
-  (add-hook 'c-mode-hook 'company-mode)
-  (add-hook 'emacs-lisp-mode-hook 'company-mode)
-  )
-(add-hook 'c++-mode-hook (
-                          lambda()
-                                (enable-flycheck)
-                                (set-local-key-for-hs-mode)
-                                ))
+;(with-eval-after-load 'company
+;  (add-hook 'c++-mode-hook 'company-mode)
+;  (add-hook 'c-mode-hook 'company-mode)
+;  (add-hook 'emacs-lisp-mode-hook 'company-mode)
+;  )
+;(add-hook 'c++-mode-hook (
+;                          lambda()
+;                                (enable-flycheck)
+;                                (set-local-key-for-hs-mode)
+;                                ))
+;
 
 ;     (elpy-enable)
 ;     (setq elpy-rpc-virtualenv-path 'current)
@@ -224,6 +226,7 @@
   (powerline-default-theme)
   )
 (set-face-background hl-line-face "gray13")
+(global-set-key (kbd "C-c g") 'find-file-at-point)
 
 (setq inhibit-startup-message t)
 (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
