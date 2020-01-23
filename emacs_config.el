@@ -89,25 +89,9 @@
    (add-to-list 'company-backends 'company-irony)
    )
 
-  ;sudo apt-get install libclang-9-dev
-  ;M-x irony-install-server
- ;(use-package irony
- ;  :ensure t
- ;  :config
- ;  (add-hook 'c++-mode-hook 'irony-mode)
- ;  (add-hook 'c-mode-hook 'irony-mode)
- ;  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
 (with-eval-after-load 'company
-  ;(add-hook 'c++-mode-hook 'company-mode)
-  ;(add-hook 'c-mode-hook 'company-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode)
   )
-;(add-hook 'c++-mode-hook (
-;                          lambda()
-;                                (enable-flycheck)
-;                                (set-local-key-for-hs-mode)
-;                                ))
 
 ;     (elpy-enable)
 ;     (setq elpy-rpc-virtualenv-path 'current)
@@ -169,14 +153,12 @@
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
         ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
-(global-set-key (kbd "C-c 2") (lambda() (interactive)(find-file "~/orgmode/todo.org")))
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline "~/orgmode/gtd/inbox.org" "Tasks")
                                "* TODO %i%?")
                               ("T" "Tickler" entry
                                (file+headline "~/orgmode/gtd/tickler.org" "Tickler")
                                "* %i%? \n %U")))
-(global-set-key (kbd "C-c 1") 'add-todo-date)
 (setq org-log-done 'time)
 (setq org-log-done 'note)
 
@@ -191,11 +173,6 @@
 ;      :ensure t
 ;      :config
 ;      (dashboard-setup-startup-hook))
-
-(load-file "~/emacs_configuration/helper-scripts.el")
-(global-set-key (kbd "C-c d") 'delete-word)
-(global-set-key (kbd "C-c r") 'toggle-rel-linum)
-(global-set-key (kbd "C-c j") 'copy-line-above)
 
 (add-to-list 'auto-mode-alist '("\\.uml\\'" . plantuml-mode))
 (setq plantuml-jar-path "~/Tools/plantuml.jar")
@@ -218,7 +195,6 @@
 (global-hl-line-mode t) ;; to highlight current line
 (ido-mode 1)
 (electric-pair-mode 1) ;; mode to set mathching braces etc.
-(superword-mode 1) ;; treat _ as part of word
 (setq visible-bell 1)
 (use-package powerline
   :ensure t
@@ -231,6 +207,12 @@
   :ensure t
   :config
   (global-set-key (kbd "C-y") 'popup-kill-ring))
+
+(load-file "~/emacs_configuration/helper-scripts.el")
+(global-set-key (kbd "C-c d") 'delete-word)
+(global-set-key (kbd "C-c w") 'copy-word)
+(global-set-key (kbd "C-c r") 'toggle-rel-linum)
+(global-set-key (kbd "C-c j") 'copy-line-above)
 
 (setq inhibit-startup-message t)
 (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
