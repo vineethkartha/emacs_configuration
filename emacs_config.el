@@ -75,40 +75,39 @@
     )
   )
 
-;(use-package company
-;    :ensure t
-;    :config
-;    (setq company-idle-delay 0)
-;    (setq company-minimum-prefix-length 2)
-;    (setq global-company-mode 1))
-;
-; (use-package company-irony
-;   :ensure t
-;   :config
-;   (require 'company)
-;   (add-to-list 'company-backends 'company-irony)
-;   )
-;
-;  ;sudo apt-get install libclang-9-dev
-;  ;M-x irony-install-server
-; (use-package irony
-;   :ensure t
-;   :config
-;   (add-hook 'c++-mode-hook 'irony-mode)
-;   (add-hook 'c-mode-hook 'irony-mode)
-;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+(use-package company
+    :ensure t
+    :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 2)
+    (setq global-company-mode 1))
 
-;(with-eval-after-load 'company
-;  (add-hook 'c++-mode-hook 'company-mode)
-;  (add-hook 'c-mode-hook 'company-mode)
-;  (add-hook 'emacs-lisp-mode-hook 'company-mode)
-;  )
+ (use-package company-irony
+   :ensure t
+   :config
+   (require 'company)
+   (add-to-list 'company-backends 'company-irony)
+   )
+
+  ;sudo apt-get install libclang-9-dev
+  ;M-x irony-install-server
+ ;(use-package irony
+ ;  :ensure t
+ ;  :config
+ ;  (add-hook 'c++-mode-hook 'irony-mode)
+ ;  (add-hook 'c-mode-hook 'irony-mode)
+ ;  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
+(with-eval-after-load 'company
+  ;(add-hook 'c++-mode-hook 'company-mode)
+  ;(add-hook 'c-mode-hook 'company-mode)
+  (add-hook 'emacs-lisp-mode-hook 'company-mode)
+  )
 ;(add-hook 'c++-mode-hook (
 ;                          lambda()
 ;                                (enable-flycheck)
 ;                                (set-local-key-for-hs-mode)
 ;                                ))
-;
 
 ;     (elpy-enable)
 ;     (setq elpy-rpc-virtualenv-path 'current)
@@ -213,12 +212,13 @@
 ;; Even version controlled files get to be backed up.
 (setq vc-make-backup-files t)
 
-(set-my-theme)
-(global-linum-mode 1)
-(global-visual-line-mode 1)
-(global-hl-line-mode t)
+;(set-my-theme)
+(global-linum-mode 1) ;; turn on line numbers
+(global-visual-line-mode 1) 
+(global-hl-line-mode t) ;; to highlight current line
 (ido-mode 1)
-(electric-pair-mode 1)
+(electric-pair-mode 1) ;; mode to set mathching braces etc.
+(superword-mode 1) ;; treat _ as part of word
 (setq visible-bell 1)
 (use-package powerline
   :ensure t
@@ -227,6 +227,10 @@
   )
 (set-face-background hl-line-face "gray13")
 (global-set-key (kbd "C-c g") 'find-file-at-point)
+(use-package popup-kill-ring
+  :ensure t
+  :config
+  (global-set-key (kbd "C-y") 'popup-kill-ring))
 
 (setq inhibit-startup-message t)
 (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))

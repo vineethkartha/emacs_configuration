@@ -13,7 +13,6 @@
   (insert text)
   )
 
-
 (defun add-todo-date ()
   "To add date to a todo list in org"
   (interactive)
@@ -62,17 +61,27 @@
   (kill-thingatpoint 'symbol)
   )
 
+(defun copy-word ()
+  "Copy the word under the cursor. This reduces the strokes M-b , C-spc , M-f, M-w"
+  (interactive)
+  (message "%s" (thing-at-point 'symbol))
+  (kill-thingatpoint 'symbol)
+  (save-excursion
+    (yank)
+    )
+  )
+
 (defun toggle-rel-linum()
   "Toggle the relative line numbering"
   (interactive)
   (if (bound-and-true-p linum-mode)
-    (progn
-      (linum-relative-toggle)
-      (if (bound-and-true-p linum-mode)
-          nil
-        (linum-mode))
-      )
+      (progn
+        (linum-relative-toggle)
+        (if (bound-and-true-p linum-mode)
+            nil
+          (linum-mode))
+        )
     (progn
       (linum-mode))
-      )
+    )
   )

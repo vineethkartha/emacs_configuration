@@ -103,22 +103,24 @@
         (require 'company)
         (add-to-list 'company-backends 'company-irony)
         )
-
-       ;sudo apt-get install libclang-9-dev
-       ;M-x irony-install-server
-      (use-package irony
-        :ensure t
-        :config
-        (add-hook 'c++-mode-hook 'irony-mode)
-        (add-hook 'c-mode-hook 'irony-mode)
-        (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-   #+END_SRC
-*** Setting up company mode with different languages
-    #+BEGIN_SRC emacs-lisp
+    #+end_src
+** Settings for C++ Environment 
+*** Setting up Irony
+      #+begin_src elisp 
+        ;sudo apt-get install libclang-9-dev
+        ;M-x irony-install-server
+        (use-package irony
+          :ensure t
+          :config
+          (add-hook 'c++-mode-hook 'irony-mode)
+          (add-hook 'c-mode-hook 'irony-mode)
+          (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+    #+end_src 
+*** Setting up company mode with C++ 
+    #+begin_src elisp 
       (with-eval-after-load 'company
         (add-hook 'c++-mode-hook 'company-mode)
         (add-hook 'c-mode-hook 'company-mode)
-        (add-hook 'emacs-lisp-mode-hook 'company-mode)
         )
       (add-hook 'c++-mode-hook (
                                 lambda()
@@ -126,7 +128,13 @@
                                       (set-local-key-for-hs-mode)
                                       ))
 
-    #+END_SRC
+    #+end_src 
+** Setting up company mode with elisp
+   #+BEGIN_SRC  emacs-lisp
+     (with-eval-after-load 'company
+       (add-hook 'emacs-lisp-mode-hook 'company-mode)
+       )
+   #+END_SRC
 ** Python Setup 
    #+BEGIN_SRC emacs-lisp
 ;     (elpy-enable)
@@ -203,14 +211,12 @@
      (setq org-todo-keyword-faces
            '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
              ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
-     (global-set-key (kbd "C-c 2") (lambda() (interactive)(find-file "~/orgmode/todo.org")))
      (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                     (file+headline "~/orgmode/gtd/inbox.org" "Tasks")
                                     "* TODO %i%?")
                                    ("T" "Tickler" entry
                                     (file+headline "~/orgmode/gtd/tickler.org" "Tickler")
                                     "* %i%? \n %U")))
-     (global-set-key (kbd "C-c 1") 'add-todo-date)
      (setq org-log-done 'time)
      (setq org-log-done 'note)
    #+END_SRC 
@@ -230,13 +236,6 @@
 ;      :ensure t
 ;      :config
 ;      (dashboard-setup-startup-hook))
-  #+END_SRC 
-* Load Custom Scripts
-  #+BEGIN_SRC emacs-lisp 
-    (load-file "~/emacs_configuration/helper-scripts.el")
-    (global-set-key (kbd "C-c d") 'delete-word)
-    (global-set-key (kbd "C-c r") 'toggle-rel-linum)
-    (global-set-key (kbd "C-c j") 'copy-line-above)
   #+END_SRC 
 * Plant UML Setup
   #+BEGIN_SRC emacs-lisp
@@ -258,14 +257,14 @@
     ;; Even version controlled files get to be backed up.
     (setq vc-make-backup-files t)
   #+END_SRC 
-* Global Settings
+* Custom Settings
   #+BEGIN_SRC emacs-lisp
-    (set-my-theme)
-    (global-linum-mode 1)
-    (global-visual-line-mode 1)
-    (global-hl-line-mode t)
+    ;(set-my-theme)
+    (global-linum-mode 1) ;; turn on line numbers
+    (global-visual-line-mode 1) 
+    (global-hl-line-mode t) ;; to highlight current line
     (ido-mode 1)
-    (electric-pair-mode 1)
+    (electric-pair-mode 1) ;; mode to set mathching braces etc.
     (setq visible-bell 1)
     (use-package powerline
       :ensure t
@@ -274,7 +273,19 @@
       )
     (set-face-background hl-line-face "gray13")
     (global-set-key (kbd "C-c g") 'find-file-at-point)
+    (use-package popup-kill-ring
+      :ensure t
+      :config
+      (global-set-key (kbd "C-y") 'popup-kill-ring))
   #+END_SRC
+** Load Custom Scripts
+   #+BEGIN_SRC emacs-lisp 
+     (load-file "~/emacs_configuration/helper-scripts.el")
+     (global-set-key (kbd "C-c d") 'delete-word)
+     (global-set-key (kbd "C-c w") 'copy-word)
+     (global-set-key (kbd "C-c r") 'toggle-rel-linum)
+     (global-set-key (kbd "C-c j") 'copy-line-above)
+   #+END_SRC 
 * A Welcome message
   This section should come after all the org setups
   #+BEGIN_SRC emacs-lisp 
