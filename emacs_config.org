@@ -104,6 +104,12 @@
         (add-to-list 'company-backends 'company-irony)
         )
     #+end_src
+** Setting up company mode with elisp
+   #+BEGIN_SRC  emacs-lisp
+     (with-eval-after-load 'company
+       (add-hook 'emacs-lisp-mode-hook 'company-mode)
+       )
+   #+END_SRC
 ** Settings for C++ Environment 
 *** Setting up Irony
       #+begin_src emacs-lisp :tangle no 
@@ -136,6 +142,11 @@
                                       ))
     #+end_src 
 
+** Python Setup 
+   #+BEGIN_SRC emacs-lisp
+;     (elpy-enable)
+;     (setq elpy-rpc-virtualenv-path 'current)
+   #+END_SRC
 * Window Navigation
 ** Ace Window
    #+BEGIN_SRC emacs-lisp

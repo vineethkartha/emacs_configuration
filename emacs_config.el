@@ -89,10 +89,17 @@
    (add-to-list 'company-backends 'company-irony)
    )
 
+(with-eval-after-load 'company
+  (add-hook 'emacs-lisp-mode-hook 'company-mode)
+  )
+
 (add-hook 'c++-mode-hook (
                           lambda()
                                 (set-local-key-for-hs-mode)
                                 ))
+
+;     (elpy-enable)
+;     (setq elpy-rpc-virtualenv-path 'current)
 
 (use-package ace-window
   :ensure t
