@@ -127,19 +127,15 @@
                                       (enable-flycheck)
                                       (set-local-key-for-hs-mode)
                                       ))
-
     #+end_src 
-** Setting up company mode with elisp
-   #+BEGIN_SRC  emacs-lisp
-     (with-eval-after-load 'company
-       (add-hook 'emacs-lisp-mode-hook 'company-mode)
-       )
-   #+END_SRC
-** Python Setup 
-   #+BEGIN_SRC emacs-lisp
-;     (elpy-enable)
-;     (setq elpy-rpc-virtualenv-path 'current)
-   #+END_SRC
+*** Enable code folding for C++
+    #+begin_src emacs-lisp 
+      (add-hook 'c++-mode-hook (
+                                lambda()
+                                      (set-local-key-for-hs-mode)
+                                      ))
+    #+end_src 
+
 * Window Navigation
 ** Ace Window
    #+BEGIN_SRC emacs-lisp
@@ -259,12 +255,18 @@
   #+END_SRC 
 * Custom Settings
   #+BEGIN_SRC emacs-lisp
-    ;(set-my-theme)
+                                            ;(set-my-theme)
     (global-linum-mode 1) ;; turn on line numbers
     (global-visual-line-mode 1) 
     (global-hl-line-mode t) ;; to highlight current line
     (ido-mode 1)
     (electric-pair-mode 1) ;; mode to set mathching braces etc.
+    ;; Enabling whitespace mode to detect crossing of 100 columns
+    (setq-default
+     whitespace-line-column 80
+     whitespace-style  '(face lines-tail)
+     )
+    (global-whitespace-mode)
     (setq visible-bell 1)
     (use-package powerline
       :ensure t
@@ -277,6 +279,7 @@
       :ensure t
       :config
       (global-set-key (kbd "C-y") 'popup-kill-ring))
+
   #+END_SRC
 ** Load Custom Scripts
    #+BEGIN_SRC emacs-lisp 

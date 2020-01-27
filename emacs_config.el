@@ -89,12 +89,10 @@
    (add-to-list 'company-backends 'company-irony)
    )
 
-(with-eval-after-load 'company
-  (add-hook 'emacs-lisp-mode-hook 'company-mode)
-  )
-
-;     (elpy-enable)
-;     (setq elpy-rpc-virtualenv-path 'current)
+(add-hook 'c++-mode-hook (
+                          lambda()
+                                (set-local-key-for-hs-mode)
+                                ))
 
 (use-package ace-window
   :ensure t
@@ -195,6 +193,12 @@
 (global-hl-line-mode t) ;; to highlight current line
 (ido-mode 1)
 (electric-pair-mode 1) ;; mode to set mathching braces etc.
+;; Enabling whitespace mode to detect crossing of 100 columns
+(setq-default
+ whitespace-line-column 80
+ whitespace-style  '(face lines-tail)
+ )
+(global-whitespace-mode)
 (setq visible-bell 1)
 (use-package powerline
   :ensure t
