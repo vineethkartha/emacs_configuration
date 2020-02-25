@@ -57,17 +57,16 @@
 (defun delete-word ()
   "Delete the word under the cursor. This reduces the strokes M-b , M-d"
   (interactive)
-  (message "%s" (thing-at-point 'symbol))
   (kill-thingatpoint 'symbol)
   )
 
 (defun copy-word ()
   "Copy the word under the cursor. This reduces the strokes M-b , C-spc , M-f, M-w"
   (interactive)
-  (message "%s" (thing-at-point 'symbol))
-  (kill-thingatpoint 'symbol)
-  (save-excursion
-    (yank)
+  (let (bounds)
+    (setq bounds (bounds-of-thing-at-point 'symbol))
+    (save-excursion
+      (copy-region-as-kill (car bounds) (cdr bounds)))
     )
   )
 
