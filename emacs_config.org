@@ -10,7 +10,7 @@
     (require 'package)
     (package-initialize)
     (add-to-list 'package-archives
-                 '("melpa-stable" . "https://stable.melpa.org/packages/"))
+                 '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
     (add-to-list 'package-archives
                  '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -264,34 +264,47 @@
     ;; Even version controlled files get to be backed up.
     (setq vc-make-backup-files t)
   #+END_SRC 
-* Custom Settings
-  #+BEGIN_SRC emacs-lisp
-                                            ;(set-my-theme)
-    (global-linum-mode 1) ;; turn on line numbers
-    (global-visual-line-mode 1) 
-    (global-hl-line-mode t) ;; to highlight current line
-    (ido-mode 1)
-    (electric-pair-mode 1) ;; mode to set mathching braces etc.
-    ;; Enabling whitespace mode to detect crossing of 100 columns
-    (setq-default
-     whitespace-line-column 80
-     whitespace-style  '(face lines-tail)
-     )
-    (global-whitespace-mode)
-    (setq visible-bell 1)
-    (use-package powerline
-      :ensure t
-      :config
-      (powerline-default-theme)
-      )
-    (set-face-background hl-line-face "gray13")
-    (global-set-key (kbd "C-c g") 'find-file-at-point)
-    (use-package popup-kill-ring
-      :ensure t
-      :config
-      (global-set-key (kbd "C-y") 'popup-kill-ring))
+* General Visual Settings
+** A Welcome message
+   This section should come after all the org setups
+   #+BEGIN_SRC emacs-lisp 
+;     (setq inhibit-startup-message t)
+;     (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
+;     (switch-to-buffer "*Org Agenda*")
+   #+END_SRC 
 
-  #+END_SRC
+** Modes enabled at startup
+   #+BEGIN_SRC emacs-lisp
+   ;(set-my-theme)
+     ;; Set the frame width and height at startup
+     (add-to-list 'default-frame-alist '(height . 50))
+     (add-to-list 'default-frame-alist '(width . 130)) 
+
+     (global-linum-mode 1) ;; turn on line numbers
+     (global-visual-line-mode 1) 
+     (global-hl-line-mode t) ;; to highlight current line
+     (ido-mode 1)
+     (electric-pair-mode 1) ;; mode to set mathching braces etc.
+     ;; Enabling whitespace mode to detect crossing of 100 columns
+     (setq-default
+      whitespace-line-column 100
+      whitespace-style  '(face lines-tail)
+      )
+     (add-hook 'text-mode-hook 'turn-on-auto-fill)
+     (global-whitespace-mode)
+     (setq visible-bell 1)
+     (use-package powerline
+       :ensure t
+       :config
+       (powerline-default-theme)
+       )
+     (set-face-background hl-line-face "gray13")
+     (global-set-key (kbd "C-c g") 'find-file-at-point)
+     (use-package popup-kill-ring
+       :ensure t
+       :config
+       (global-set-key (kbd "C-y") 'popup-kill-ring))
+   #+END_SRC
 ** Load Custom Scripts
    #+BEGIN_SRC emacs-lisp 
      (load-file "~/emacs_configuration/helper-scripts.el")
@@ -300,14 +313,6 @@
      (global-set-key (kbd "C-c r") 'toggle-rel-linum)
      (global-set-key (kbd "C-c j") 'copy-line-above)
    #+END_SRC 
-* A Welcome message
-  This section should come after all the org setups
-  #+BEGIN_SRC emacs-lisp 
-    (setq inhibit-startup-message t)
-    (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
-    (switch-to-buffer "*Org Agenda*")
-  #+END_SRC 
-
 * Saving and Loading Desktop Session
   This is based on the code by Scott Frazer
   http://scottfrazersblog.blogspot.com/2009/12/emacs-named-desktop-sessions.html

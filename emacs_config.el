@@ -1,7 +1,7 @@
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+             '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -194,40 +194,45 @@
 ;; Even version controlled files get to be backed up.
 (setq vc-make-backup-files t)
 
+;     (setq inhibit-startup-message t)
+;     (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
+;     (switch-to-buffer "*Org Agenda*")
+
 ;(set-my-theme)
-(global-linum-mode 1) ;; turn on line numbers
-(global-visual-line-mode 1) 
-(global-hl-line-mode t) ;; to highlight current line
-(ido-mode 1)
-(electric-pair-mode 1) ;; mode to set mathching braces etc.
-;; Enabling whitespace mode to detect crossing of 100 columns
-(setq-default
- whitespace-line-column 80
- whitespace-style  '(face lines-tail)
- )
-(global-whitespace-mode)
-(setq visible-bell 1)
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-default-theme)
-  )
-(set-face-background hl-line-face "gray13")
-(global-set-key (kbd "C-c g") 'find-file-at-point)
-(use-package popup-kill-ring
-  :ensure t
-  :config
-  (global-set-key (kbd "C-y") 'popup-kill-ring))
+  ;; Set the frame width and height at startup
+  (add-to-list 'default-frame-alist '(height . 50))
+  (add-to-list 'default-frame-alist '(width . 130)) 
+
+  (global-linum-mode 1) ;; turn on line numbers
+  (global-visual-line-mode 1) 
+  (global-hl-line-mode t) ;; to highlight current line
+  (ido-mode 1)
+  (electric-pair-mode 1) ;; mode to set mathching braces etc.
+  ;; Enabling whitespace mode to detect crossing of 100 columns
+  (setq-default
+   whitespace-line-column 100
+   whitespace-style  '(face lines-tail)
+   )
+  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+  (global-whitespace-mode)
+  (setq visible-bell 1)
+  (use-package powerline
+    :ensure t
+    :config
+    (powerline-default-theme)
+    )
+  (set-face-background hl-line-face "gray13")
+  (global-set-key (kbd "C-c g") 'find-file-at-point)
+  (use-package popup-kill-ring
+    :ensure t
+    :config
+    (global-set-key (kbd "C-y") 'popup-kill-ring))
 
 (load-file "~/emacs_configuration/helper-scripts.el")
 (global-set-key (kbd "C-c d") 'delete-word)
 (global-set-key (kbd "C-c w") 'copy-word)
 (global-set-key (kbd "C-c r") 'toggle-rel-linum)
 (global-set-key (kbd "C-c j") 'copy-line-above)
-
-(setq inhibit-startup-message t)
-(add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
-(switch-to-buffer "*Org Agenda*")
 
 (require 'desktop)
 (setq session-save-path default-directory)
