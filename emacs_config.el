@@ -1,5 +1,4 @@
 (require 'package)
-(package-initialize)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
@@ -17,7 +16,7 @@
   '(
     company
     company-irony
-    ;dashboard
+    dashboard
     use-package
     flycheck
     ace-window
@@ -126,6 +125,7 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
+;(setq org-archive-location "~/orgmode/gtd/archive/2020.org")
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-window-setup (quote current-window))
 ;;warn me of any deadlines in next 2 days
@@ -153,11 +153,11 @@
 (setq org-plantuml-jar-path "~/Tools/plantuml.jar")
 
 (setq org-todo-keywords 
-      '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+      '((sequence "TODO" "LIVE" "STALL" "|" "DONE" "KILL")))
 
 (setq org-todo-keyword-faces
-      '(("TODO" . org-warning) ("IN-PROGRESS" . "yellow")
-        ("WAITING" . "blue") ("DONE" . "green") ("CANCELED" . "orange")))
+      '(("TODO" . org-warning) ("LIVE" . "yellow")
+        ("STALL" . "blue") ("DONE" . "green") ("KILL" . "orange")))
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline "~/orgmode/gtd/inbox.org" "Tasks")
                                "* TODO %i%?")
@@ -174,10 +174,10 @@
 ;        (?/ . ?/)
 ;        ))
 
-;    (use-package dashboard
-;      :ensure t
-;      :config
-;      (dashboard-setup-startup-hook))
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
 
 (add-to-list 'auto-mode-alist '("\\.uml\\'" . plantuml-mode))
 (setq plantuml-jar-path "~/Tools/plantuml.jar")
