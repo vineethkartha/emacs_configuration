@@ -52,9 +52,9 @@
 (defun check-spacemacs-theme()
   (if (file-exists-p "~/.emacs.d/themes/spacemacs-common.el")
       (progn
-        (load-file "~/.emacs.d/themes/spacemacs-common.el")
-        t
-        )
+	(load-file "~/.emacs.d/themes/spacemacs-common.el")
+	t
+	)
     (progn 
       (message "Spacemacs theme not present")
       nil
@@ -67,12 +67,18 @@
       (load-theme 'spacemacs-dark)
     (progn
       (if (featurep 'solarized-dark-theme)
-          (load-theme 'solarized-dark)
-        (message "No Interesting theme so sad")
-        )
+	  (load-theme 'solarized-dark)
+	(message "No Interesting theme so sad")
+	)
       )
     )
   )
+
+(defun setup-flycheck-rtags ()
+  (interactive)
+  (flycheck-select-checker 'rtags)
+  (setq-local flycheck-highlighting-mode nil)
+  (setq-local flycheck-check-syntax-automatically nil))
 
 (use-package company
     :ensure t
@@ -96,6 +102,28 @@
                           lambda()
                                 (set-local-key-for-hs-mode)
                                 ))
+
+;; only run this if rtags is installed
+(when (require 'rtags nil :noerror)
+  ;; make sure you have company-mode installed
+  (require 'company)
+  (define-key c-mode-base-map (kbd "M-.")
+    (function rtags-find-symbol-at-point))
+  (define-key c-mode-base-map (kbd "M-,")
+    (function rtags-find-references-at-point))
+  ;; install standard rtags keybindings. Do M-. on the symbol below to
+  ;; jump to definition and see the keybindings.
+  (rtags-enable-standard-keybindings)
+  (setq rtags-autostart-diagnostics t)
+  (rtags-diagnostics)
+  (setq rtags-completions-enabled t)
+  (push 'company-rtags company-backends)
+  (global-company-mode)
+  (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+  ;; use rtags flycheck mode -- clang warnings shown inline
+  (require 'flycheck-rtags)
+  ;; c-mode-common-hook is also called by c++-mode
+  (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
 
 ;     (elpy-enable)
 ;     (setq elpy-rpc-virtualenv-path 'current)
@@ -198,35 +226,35 @@
 ;     (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
 ;     (switch-to-buffer "*Org Agenda*")
 
-;(set-my-theme)
-  ;; Set the frame width and height at startup
-  (add-to-list 'default-frame-alist '(height . 50))
-  (add-to-list 'default-frame-alist '(width . 130)) 
+(set-my-theme)
+;; Set the frame width and height at startup
+(add-to-list 'default-frame-alist '(height . 50))
+(add-to-list 'default-frame-alist '(width . 130)) 
 
-  (global-linum-mode 1) ;; turn on line numbers
-  (global-visual-line-mode 1) 
-  (global-hl-line-mode t) ;; to highlight current line
-  (ido-mode 1)
-  (electric-pair-mode 1) ;; mode to set mathching braces etc.
-  ;; Enabling whitespace mode to detect crossing of 100 columns
-  (setq-default
-   whitespace-line-column 100
-   whitespace-style  '(face lines-tail)
-   )
-  (add-hook 'text-mode-hook 'turn-on-auto-fill)
-  (global-whitespace-mode)
-  (setq visible-bell 1)
-  (use-package powerline
-    :ensure t
-    :config
-    (powerline-default-theme)
-    )
-  (set-face-background hl-line-face "gray13")
-  (global-set-key (kbd "C-c g") 'find-file-at-point)
-  (use-package popup-kill-ring
-    :ensure t
-    :config
-    (global-set-key (kbd "C-y") 'popup-kill-ring))
+(global-linum-mode 1) ;; turn on line numbers
+(global-visual-line-mode 1) 
+(global-hl-line-mode t) ;; to highlight current line
+(ido-mode 1)
+(electric-pair-mode 1) ;; mode to set mathching braces etc.
+;; Enabling whitespace mode to detect crossing of 100 columns
+(setq-default
+ whitespace-line-column 100
+ whitespace-style  '(face lines-tail)
+ )
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(global-whitespace-mode)
+(setq visible-bell 1)
+(use-package powerline
+  :ensure t
+  :config
+  (powerline-default-theme)
+  )
+(set-face-background hl-line-face "gray13")
+(global-set-key (kbd "C-c g") 'find-file-at-point)
+(use-package popup-kill-ring
+  :ensure t
+  :config
+  (global-set-key (kbd "C-y") 'popup-kill-ring))
 
 (load-file "~/emacs_configuration/helper-scripts.el")
 (global-set-key (kbd "C-c d") 'delete-word)
@@ -236,8 +264,6 @@
 
 (require 'desktop)
 (setq session-save-path default-directory)
-
-
 (defvar my-desktop-session-dir
   (concat (getenv "HOME") "/.emacs.d/desktop-sessions/")
   "*Directory to save desktop sessions in")
