@@ -2,8 +2,8 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
+	     ;(add-to-list 'package-archives
+             ;'("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/"))
@@ -226,7 +226,7 @@
 ;     (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
 ;     (switch-to-buffer "*Org Agenda*")
 
-(set-my-theme)
+;(set-my-theme)
 ;; Set the frame width and height at startup
 (add-to-list 'default-frame-alist '(height . 50))
 (add-to-list 'default-frame-alist '(width . 130)) 

@@ -11,8 +11,8 @@
     (add-to-list 'package-archives
                  '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
-    (add-to-list 'package-archives
-                 '("melpa" . "http://melpa.milkbox.net/packages/"))
+		 ;(add-to-list 'package-archives
+                 ;'("melpa" . "http://melpa.milkbox.net/packages/"))
 
     (add-to-list 'package-archives
                  '("org" . "http://orgmode.org/elpa/"))
@@ -335,7 +335,7 @@
        :config
        (global-set-key (kbd "C-y") 'popup-kill-ring))
    #+END_SRC
-** Load Custom Scripts
+** TODO Load Custom Scripts
    #+BEGIN_SRC emacs-lisp 
      (load-file "~/emacs_configuration/helper-scripts.el")
      (global-set-key (kbd "C-c d") 'delete-word)
