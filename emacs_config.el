@@ -29,7 +29,7 @@
     popup-kill-ring
     htmlize
     solarized-theme
-    dracula-theme
+    darcula-theme
     )
   )
 (dolist (pkg my-packages)
