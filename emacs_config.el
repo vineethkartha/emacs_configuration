@@ -103,28 +103,6 @@
                                 (set-local-key-for-hs-mode)
                                 ))
 
-;; only run this if rtags is installed
-(when (require 'rtags nil :noerror)
-  ;; make sure you have company-mode installed
-  (require 'company)
-  (define-key c-mode-base-map (kbd "M-.")
-    (function rtags-find-symbol-at-point))
-  (define-key c-mode-base-map (kbd "M-,")
-    (function rtags-find-references-at-point))
-  ;; install standard rtags keybindings. Do M-. on the symbol below to
-  ;; jump to definition and see the keybindings.
-  (rtags-enable-standard-keybindings)
-  (setq rtags-autostart-diagnostics t)
-  (rtags-diagnostics)
-  (setq rtags-completions-enabled t)
-  (push 'company-rtags company-backends)
-  (global-company-mode)
-  (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-  ;; use rtags flycheck mode -- clang warnings shown inline
-  (require 'flycheck-rtags)
-  ;; c-mode-common-hook is also called by c++-mode
-  (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
-
 ;     (elpy-enable)
 ;     (setq elpy-rpc-virtualenv-path 'current)
 
@@ -142,6 +120,10 @@
 (push '("[ ]" . "☐") prettify-symbols-alist)
 (push '("[X]" . "☑" ) prettify-symbols-alist)
 (push '("[-]" . "❍" ) prettify-symbols-alist)
+(push '("#+begin_src" . "↦" ) prettify-symbols-alist)
+(push '("#+end_src" . "⇤" ) prettify-symbols-alist)
+(push '("#+BEGIN_SRC" . "↦" ) prettify-symbols-alist)
+(push '("#+END_SRC" . "⇤" ) prettify-symbols-alist)
 (prettify-symbols-mode)))
 (setq org-ellipsis "->")
 (org-babel-do-load-languages
@@ -178,12 +160,35 @@
         (search category-keep))))
 (setq org-image-actual-width nil)
 (setq org-agenda-custom-commands
-      `(("W" "Weekly Status" 
+      `(("Q" . "Custom Queries")
+      ("Qt" "Team Status" 	
          tags (concat "+TODO=\"DONE\""
                       "+CLOSED>=\"<-7d>\""
-                      "+CLOSED<\"<today>\""))))
-(setq org-refile-targets
-      '((org-agenda-files :maxlevel . 1)))
+                      "+CLOSED<\"<today>\"")
+         (org-agenda-sorting-strategy tag-up)
+         )
+        ("Qm" "Monthly Status" 
+         tags (concat "+TODO=\"DONE\""
+                      "+CLOSED>=\"<-30d>\""
+                      "+CLOSED<\"<today>\"")
+         (org-agenda-sorting-strategy tag-up)
+         )
+        ("Qy" "Yearly Status" 
+         tags (concat "+TODO=\"DONE\""
+                      "+CLOSED>=\"<enter start date>\""
+                      "+CLOSED<\"<enter end date>\"")
+         (org-agenda-sorting-strategy tag-up)
+         )
+        ("Qw" "Weekly review"
+         agenda ""
+         ((org-agenda-span 'week)
+          (org-agenda-start-on-weekday 2)
+          (org-agenda-start-with-log-mode t)
+          (org-agenda-skip-function
+           '(org-agenda-skip-entry-if 'notdeadline 'todo '("TODO" "LIVE" "STALL")))
+          ))))
+          (setq org-refile-targets
+          '((org-agenda-files :maxlevel . 1)))
 
 (setq org-todo-keywords 
       '((sequence "TODO" "LIVE" "STALL" "|" "DONE" "KILL")))
