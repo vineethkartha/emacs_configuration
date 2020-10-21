@@ -138,7 +138,11 @@
 (global-set-key (kbd "M-n") 'switch-to-next-buffer)
 (global-set-key (kbd "M-p") 'switch-to-prev-buffer)
 
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)
+(push '("[ ]" . "☐") prettify-symbols-alist)
+(push '("[X]" . "☑" ) prettify-symbols-alist)
+(push '("[-]" . "❍" ) prettify-symbols-alist)
+(prettify-symbols-mode)))
 (setq org-ellipsis "->")
 (org-babel-do-load-languages
  'org-babel-load-languages '(
@@ -148,7 +152,10 @@
                              (plantuml . t)
                              )
  )
+(setq org-src-fontify-natively t)
 (setq org-hide-emphasis-markers t)
+
+(setq org-plantuml-jar-path "~/Tools/plantuml.jar")
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -177,8 +184,6 @@
                       "+CLOSED<\"<today>\""))))
 (setq org-refile-targets
       '((org-agenda-files :maxlevel . 1)))
-
-(setq org-plantuml-jar-path "~/Tools/plantuml.jar")
 
 (setq org-todo-keywords 
       '((sequence "TODO" "LIVE" "STALL" "|" "DONE" "KILL")))

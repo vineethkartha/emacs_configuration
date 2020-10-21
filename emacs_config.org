@@ -194,7 +194,15 @@
 * Org Mode
 ** General Settings
    #+BEGIN_SRC emacs-lisp
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)
+    (push '("[ ]" . "☐") prettify-symbols-alist)
+    (push '("[X]" . "☑" ) prettify-symbols-alist)
+    (push '("[-]" . "❍" ) prettify-symbols-alist)
+    (push '("#+begin_src" . "↦" ) prettify-symbols-alist)
+    (push '("#+end_src" . "⇤" ) prettify-symbols-alist)
+    (push '("#+BEGIN_SRC" . "↦" ) prettify-symbols-alist)
+    (push '("#+END_SRC" . "⇤" ) prettify-symbols-alist)
+    (prettify-symbols-mode)))
     (setq org-ellipsis "->")
     (org-babel-do-load-languages
      'org-babel-load-languages '(
@@ -204,8 +212,13 @@
                                  (plantuml . t)
                                  )
      )
+    (setq org-src-fontify-natively t)
     (setq org-hide-emphasis-markers t)
    #+END_SRC
+** ORG PlantUML settings
+   #+BEGIN_SRC emacs-lisp 
+     (setq org-plantuml-jar-path "~/Tools/plantuml.jar")
+   #+END_SRC 
 ** ORG Agenda settings
    #+BEGIN_SRC emacs-lisp 
      (global-set-key "\C-cl" 'org-store-link)
@@ -235,10 +248,6 @@
                            "+CLOSED<\"<today>\""))))
      (setq org-refile-targets
            '((org-agenda-files :maxlevel . 1)))
-   #+END_SRC 
-** ORG PlantUML settings
-   #+BEGIN_SRC emacs-lisp 
-     (setq org-plantuml-jar-path "~/Tools/plantuml.jar")
    #+END_SRC 
 ** Todo List customisation
    #+BEGIN_SRC emacs-lisp 
