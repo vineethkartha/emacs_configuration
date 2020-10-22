@@ -146,6 +146,51 @@
                                       (set-local-key-for-hs-mode)
                                       ))
     #+end_src 
+*** Setting up LSP for personal Use
+    https://emacs-lsp.github.io/lsp-mode/page/installation/
+    sudo apt install ccls
+    #+begin_src emacs_lisp
+    (defvar my-lsp-packages
+      '(
+        lsp-ui
+	lsp-treemacs
+	lsp-ivy
+	dap-mode
+        )
+      )
+    (dolist (pkg my-lsp-packages)
+      (unless (package-installed-p pkg)
+        (message "Installing %s ..." pkg)
+        (condition-case nil
+            (package-install pkg)
+          (error (warn "Failed to install %s ..." pkg)))
+        ))
+     
+     ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+     (setq lsp-keymap-prefix "C-c t")
+
+     (use-package lsp-mode
+      :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+            (c++-mode . lsp)
+            ;; if you want which-key integration
+            (lsp-mode . lsp-enable-which-key-integration))
+	    :commands lsp)
+
+      ;; optionally
+      (use-package lsp-ui :commands lsp-ui-mode)
+      ;; if you are ivy user
+      (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+      (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+      ;; optionally if you want to use debugger
+      (use-package dap-mode)
+      ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+      ;; optional if you want which-key integration
+      (use-package which-key
+      :config
+      (which-key-mode))
+    #+end_src
 ** Python Setup 
    #+BEGIN_SRC emacs-lisp
 ;     (elpy-enable)
