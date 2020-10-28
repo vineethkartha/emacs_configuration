@@ -84,3 +84,10 @@
       (linum-mode))
     )
   )
+
+(defun copy-full-file-path()
+  "Copy the full path to a file in opened in the current buffer"
+  (interactive)
+  (setq file-name (buffer-file-name))
+  (kill-new file-name)
+  )

@@ -387,13 +387,14 @@
        :config
        (global-set-key (kbd "C-y") 'popup-kill-ring))
    #+END_SRC
-** TODO Load Custom Scripts
+** Load Custom Scripts
    #+BEGIN_SRC emacs-lisp 
      (load-file "~/emacs_configuration/helper-scripts.el")
      (global-set-key (kbd "C-c d") 'delete-word)
      (global-set-key (kbd "C-c w") 'copy-word)
      (global-set-key (kbd "C-c r") 'toggle-rel-linum)
      (global-set-key (kbd "C-c j") 'copy-line-above)
+     (global-set-key (kbd "C-c k") 'copy-full-file-path)
    #+END_SRC 
 * Saving and Loading Desktop Session
   This is based on the code by Scott Frazer

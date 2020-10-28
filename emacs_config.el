@@ -271,6 +271,7 @@
 (global-set-key (kbd "C-c w") 'copy-word)
 (global-set-key (kbd "C-c r") 'toggle-rel-linum)
 (global-set-key (kbd "C-c j") 'copy-line-above)
+(global-set-key (kbd "C-c k") 'copy-full-file-path)
 
 (require 'desktop)
 (setq session-save-path default-directory)
