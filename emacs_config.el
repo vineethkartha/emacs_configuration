@@ -30,6 +30,7 @@
     htmlize
     solarized-theme
     darcula-theme
+    fzf
     )
   )
 (dolist (pkg my-packages)
@@ -272,6 +273,7 @@
 (global-set-key (kbd "C-c r") 'toggle-rel-linum)
 (global-set-key (kbd "C-c j") 'copy-line-above)
 (global-set-key (kbd "C-c k") 'copy-full-file-path)
+(global-set-key (kbd "C-c f") 'fzf-directory)
 
 (require 'desktop)
 (setq session-save-path default-directory)
