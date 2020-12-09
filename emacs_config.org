@@ -160,6 +160,13 @@
       :config
       (which-key-mode))
     #+end_src
+*** Compile command for personal Use
+    #+begin_src emacs-lisp 
+    (load-file "~/emacs_configuration/compile-file.el")
+    (global-set-key (kbd "C-x c") 'compile-file)
+    (global-set-key (kbd "C-x x") 'run-file)
+    #+end_src 
+
 ** Python Setup 
    #+BEGIN_SRC emacs-lisp
 ;     (elpy-enable)

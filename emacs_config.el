@@ -50,37 +50,6 @@
   (local-set-key (kbd "M-;") 'hs-toggle-hiding)
   )
 
-(defun check-spacemacs-theme()
-  (if (file-exists-p "~/.emacs.d/themes/spacemacs-common.el")
-      (progn
-	(load-file "~/.emacs.d/themes/spacemacs-common.el")
-	t
-	)
-    (progn 
-      (message "Spacemacs theme not present")
-      nil
-      )
-    )
-  )
-
-(defun set-my-theme()
-  (if (check-spacemacs-theme)
-      (load-theme 'spacemacs-dark)
-    (progn
-      (if (featurep 'solarized-dark-theme)
-	  (load-theme 'solarized-dark)
-	(message "No Interesting theme so sad")
-	)
-      )
-    )
-  )
-
-(defun setup-flycheck-rtags ()
-  (interactive)
-  (flycheck-select-checker 'rtags)
-  (setq-local flycheck-highlighting-mode nil)
-  (setq-local flycheck-check-syntax-automatically nil))
-
 (use-package company
     :ensure t
     :config
@@ -103,6 +72,10 @@
                           lambda()
                                 (set-local-key-for-hs-mode)
                                 ))
+
+(load-file "~/emacs_configuration/compile-file.el")
+(global-set-key (kbd "C-x c") 'compile-file)
+(global-set-key (kbd "C-x x") 'run-file)
 
 ;     (elpy-enable)
 ;     (setq elpy-rpc-virtualenv-path 'current)
@@ -237,7 +210,6 @@
 ;     (add-hook 'after-init-hook '(lambda () (org-agenda-list 1)))
 ;     (switch-to-buffer "*Org Agenda*")
 
-;(set-my-theme)
 ;; Set the frame width and height at startup
 (add-to-list 'default-frame-alist '(height . 50))
 (add-to-list 'default-frame-alist '(width . 130)) 

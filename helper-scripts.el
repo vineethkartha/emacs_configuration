@@ -2,7 +2,7 @@
   "Generate a simple cpp file to get started"
   (interactive )
   (setq text (format "#include<iostream>\n#include<string>\n\nint main() {\n\n\treturn 0;\n}"))
-  (add-text-helper text)
+  (insert text)
   )
 
 (defun add-abstract(funcName)
@@ -91,3 +91,4 @@
   (setq file-name (buffer-file-name))
   (kill-new file-name)
   )
+
