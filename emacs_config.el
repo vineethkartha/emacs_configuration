@@ -76,6 +76,7 @@
 (load-file "~/emacs_configuration/compile-file.el")
 (global-set-key (kbd "C-x c") 'compile-file)
 (global-set-key (kbd "C-x x") 'run-file)
+(global-set-key (kbd "<f2>") 'gud-gdb)
 
 ;     (elpy-enable)
 ;     (setq elpy-rpc-virtualenv-path 'current)
@@ -91,9 +92,9 @@
 (global-set-key (kbd "M-p") 'switch-to-prev-buffer)
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)
-(push '("[ ]" . "☐") prettify-symbols-alist)
-(push '("[X]" . "☑" ) prettify-symbols-alist)
-(push '("[-]" . "❍" ) prettify-symbols-alist)
+(push '("[ ]" . "") prettify-symbols-alist)
+(push '("[X]" . "" ) prettify-symbols-alist)
+(push '("[-]" . "" ) prettify-symbols-alist)
 (push '("#+begin_src" . "↦" ) prettify-symbols-alist)
 (push '("#+end_src" . "⇤" ) prettify-symbols-alist)
 (push '("#+BEGIN_SRC" . "↦" ) prettify-symbols-alist)

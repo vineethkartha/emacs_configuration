@@ -16,7 +16,7 @@
                    (if extension
                        (format ".%s" extension)
                      "")))
-  (compile (format "g++ -std=c++17 %s -o %s%s"
+  (compile (format "g++ -std=c++17 -D_GLIBCXX_DEBUG -g %s -o %s%s"
                    file
                    (shell-quote-argument (file-name-sans-extension file))
                    (if extension
@@ -31,4 +31,13 @@
   (setq executable (concat (shell-quote-argument (file-name-sans-extension file)) ".out"))
   ;(delete-file executable)
   (term (format "./%s" executable))
+  )
+
+(defun debug-file()
+  (interactive)
+  (setq file (file-name-nondirectory (buffer-file-name)))
+  (setq executable (concat (shell-quote-argument (file-name-sans-extension file)) ".out"))
+					;(delete-file executable)
+  ;(gud-gdb executable)
+  (gud-gdb (format "%s" executable))
   )
