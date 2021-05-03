@@ -28,8 +28,6 @@
     sos
     popup-kill-ring
     htmlize
-    solarized-theme
-    darcula-theme
     fzf
     )
   )
@@ -100,7 +98,7 @@
 (push '("#+BEGIN_SRC" . "↦" ) prettify-symbols-alist)
 (push '("#+END_SRC" . "⇤" ) prettify-symbols-alist)
 (prettify-symbols-mode)))
-(setq org-ellipsis "->")
+(setq org-ellipsis "⇝")
 (org-babel-do-load-languages
  'org-babel-load-languages '(
                              (C . t)
