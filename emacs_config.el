@@ -90,6 +90,7 @@
 (global-set-key (kbd "M-p") 'switch-to-prev-buffer)
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)
+(add-hook 'org-mode-hook 'org-indent-mode)
 (push '("[ ]" . "") prettify-symbols-alist)
 (push '("[X]" . "" ) prettify-symbols-alist)
 (push '("[-]" . "" ) prettify-symbols-alist)
