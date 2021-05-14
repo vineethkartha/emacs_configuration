@@ -371,6 +371,7 @@
      (global-set-key (kbd "C-c j") 'copy-line-above)
      (global-set-key (kbd "C-c k") 'copy-full-file-path)
      (global-set-key (kbd "C-c f") 'fzf-directory)
+     (global-set-key (kbd "C-x |") 'toggle-window-split)
    #+END_SRC 
 * Saving and Loading Desktop Session
   This is based on the code by Scott Frazer
