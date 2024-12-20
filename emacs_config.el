@@ -1,14 +1,13 @@
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/"))
-
-	     ;(add-to-list 'package-archives
-             ;'("melpa" . "http://melpa.milkbox.net/packages/"))
+	     '("gnu" . "https://elpa.gnu.org/packages/"))
 
 (add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/"))
+	     '("melpa" . "https://melpa.org/packages/") t)
 
-(package-initialize)
+(add-to-list 'package-archives
+	     '("org" . "https://orgmode.org/elpa/"))
+
 (when (not package-archive-contents)  
   (package-refresh-contents))
 
@@ -25,7 +24,6 @@
     which-key
     linum-relative
     plantuml-mode
-    sos
     popup-kill-ring
     htmlize
     fzf
@@ -35,7 +33,7 @@
   (unless (package-installed-p pkg)
     (message "Installing %s ..." pkg)
     (condition-case nil
-        (package-install pkg)
+	(package-install pkg)
       (error (warn "Failed to install %s ..." pkg)))
     ))
 
@@ -232,7 +230,7 @@
   :config
   (powerline-default-theme)
   )
-(set-face-background hl-line-face "gray13")
+(set-face-background hl-line-face "white")
 (global-set-key (kbd "C-c g") 'find-file-at-point)
 (use-package popup-kill-ring
   :ensure t
@@ -246,6 +244,7 @@
 (global-set-key (kbd "C-c j") 'copy-line-above)
 (global-set-key (kbd "C-c k") 'copy-full-file-path)
 (global-set-key (kbd "C-c f") 'fzf-directory)
+(global-set-key (kbd "C-x |") 'toggle-window-split)
 
 (require 'desktop)
 (setq session-save-path default-directory)

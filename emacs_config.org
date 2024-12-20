@@ -9,44 +9,42 @@
   #+BEGIN_SRC emacs-lisp
     (require 'package)
     (add-to-list 'package-archives
-                 '("melpa-stable" . "http://stable.melpa.org/packages/"))
-
-		 ;(add-to-list 'package-archives
-                 ;'("melpa" . "http://melpa.milkbox.net/packages/"))
+		 '("gnu" . "https://elpa.gnu.org/packages/"))
 
     (add-to-list 'package-archives
-                 '("org" . "http://orgmode.org/elpa/"))
+		 '("melpa" . "https://melpa.org/packages/") t)
+    
+    (add-to-list 'package-archives
+		 '("org" . "https://orgmode.org/elpa/"))
 
-    (package-initialize)
     (when (not package-archive-contents)  
       (package-refresh-contents))
 
     (defvar my-packages
       '(
-        company
-        company-irony
-        dashboard
-        use-package
-        flycheck
-        ace-window
-        org-bullets
-        powerline
-        which-key
-        linum-relative
-        plantuml-mode
-        sos
-        popup-kill-ring
-        htmlize
+	company
+	company-irony
+	dashboard
+	use-package
+	flycheck
+	ace-window
+	org-bullets
+	powerline
+	which-key
+	linum-relative
+	plantuml-mode
+	popup-kill-ring
+	htmlize
 	fzf
-        )
+	)
       )
     (dolist (pkg my-packages)
       (unless (package-installed-p pkg)
-        (message "Installing %s ..." pkg)
-        (condition-case nil
-            (package-install pkg)
-          (error (warn "Failed to install %s ..." pkg)))
-        ))
+	(message "Installing %s ..." pkg)
+	(condition-case nil
+	    (package-install pkg)
+	  (error (warn "Failed to install %s ..." pkg)))
+	))
   #+END_SRC
 * Helper Functions
   #+BEGIN_SRC emacs-lisp
@@ -355,7 +353,7 @@
        :config
        (powerline-default-theme)
        )
-     (set-face-background hl-line-face "gray13")
+     (set-face-background hl-line-face "white")
      (global-set-key (kbd "C-c g") 'find-file-at-point)
      (use-package popup-kill-ring
        :ensure t
