@@ -1,15 +1,15 @@
 (require 'package)
-(add-to-list 'package-archives
-	     '("gnu" . "https://elpa.gnu.org/packages/"))
+;;(add-to-list 'package-archives
+;;		 '("gnu" . "https://elpa.gnu.org/packages/"))
+;;
+;;(add-to-list 'package-archives
+;;		 '("melpa" . "https://melpa.org/packages/") t)
+;;
+;;(add-to-list 'package-archives
+;;		 '("org" . "https://orgmode.org/elpa/"))
 
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-
-(add-to-list 'package-archives
-	     '("org" . "https://orgmode.org/elpa/"))
-
-(when (not package-archive-contents)  
-  (package-refresh-contents))
+;(when (not package-archive-contents)  
+;  (package-refresh-contents))
 
 (defvar my-packages
   '(
@@ -230,12 +230,13 @@
   :config
   (powerline-default-theme)
   )
-(set-face-background hl-line-face "white")
+(set-face-attribute 'hl-line nil :foreground nil :background "white")
 (global-set-key (kbd "C-c g") 'find-file-at-point)
 (use-package popup-kill-ring
   :ensure t
   :config
   (global-set-key (kbd "C-y") 'popup-kill-ring))
+(add-hook 'server-after-make-frame-hook (lambda () (dashboard-refresh-buffer)))
 
 (load-file "~/emacs_configuration/helper-scripts.el")
 (global-set-key (kbd "C-c d") 'delete-word)

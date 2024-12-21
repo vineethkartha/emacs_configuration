@@ -9,13 +9,13 @@
   #+BEGIN_SRC emacs-lisp
     (require 'package)
     (add-to-list 'package-archives
-		 '("gnu" . "https://elpa.gnu.org/packages/"))
-
-    (add-to-list 'package-archives
-		 '("melpa" . "https://melpa.org/packages/") t)
+    		 '("gnu" . "https://elpa.gnu.org/packages/"))
     
     (add-to-list 'package-archives
-		 '("org" . "https://orgmode.org/elpa/"))
+    		 '("melpa" . "https://melpa.org/packages/") t)
+    
+    (add-to-list 'package-archives
+    		 '("org" . "https://orgmode.org/elpa/"))
 
     (when (not package-archive-contents)  
       (package-refresh-contents))
@@ -353,13 +353,14 @@
        :config
        (powerline-default-theme)
        )
-     (set-face-background hl-line-face "white")
+     (set-face-attribute 'hl-line nil :foreground nil :background "white")
      (global-set-key (kbd "C-c g") 'find-file-at-point)
      (use-package popup-kill-ring
        :ensure t
        :config
        (global-set-key (kbd "C-y") 'popup-kill-ring))
-   #+END_SRC
+     (add-hook 'server-after-make-frame-hook (lambda () (dashboard-refresh-buffer)))
+   #+END_SRC	  
 ** Load Custom Scripts
    #+BEGIN_SRC emacs-lisp 
      (load-file "~/emacs_configuration/helper-scripts.el")
