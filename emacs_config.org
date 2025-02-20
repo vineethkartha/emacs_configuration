@@ -31,11 +31,11 @@
 	org-bullets
 	powerline
 	which-key
-	linum-relative
 	plantuml-mode
 	popup-kill-ring
 	htmlize
 	fzf
+        centaur-tabs
 	)
       )
     (dolist (pkg my-packages)
@@ -184,6 +184,12 @@
      (global-set-key (kbd "M-n") 'switch-to-next-buffer)
      (global-set-key (kbd "M-p") 'switch-to-prev-buffer)
    #+END_SRC 
+*** Configure avy
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "C-c SPC") 'avy-resume)
+     (global-set-key (kbd "C-c n") 'avy-pop-mark)
+     (global-set-key (kbd "C-c ,") 'avy-kill-region)
+   #+end_src 
 * Org Mode
 ** General Settings
    #+BEGIN_SRC emacs-lisp
@@ -348,13 +354,15 @@
      (add-hook 'text-mode-hook 'turn-on-auto-fill)
      (global-whitespace-mode)
      (setq visible-bell 1)
+     
+     (set-face-attribute 'hl-line nil :foreground nil :background "gray13")
+     (global-set-key (kbd "C-c g") 'find-file-at-point)
+
      (use-package powerline
        :ensure t
        :config
        (powerline-default-theme)
-       )
-     (set-face-attribute 'hl-line nil :foreground nil :background "white")
-     (global-set-key (kbd "C-c g") 'find-file-at-point)
+      )
      (use-package popup-kill-ring
        :ensure t
        :config
@@ -366,7 +374,7 @@
      (load-file "~/emacs_configuration/helper-scripts.el")
      (global-set-key (kbd "C-c d") 'delete-word)
      (global-set-key (kbd "C-c w") 'copy-word)
-     (global-set-key (kbd "C-c r") 'toggle-rel-linum)
+     (global-set-key (kbd "C-c r") 'inum-relative-toggle)
      (global-set-key (kbd "C-c j") 'copy-line-above)
      (global-set-key (kbd "C-c k") 'copy-full-file-path)
      (global-set-key (kbd "C-c f") 'fzf-directory)
