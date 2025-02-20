@@ -36,6 +36,7 @@
 	htmlize
 	fzf
         centaur-tabs
+        ido
 	)
       )
     (dolist (pkg my-packages)
@@ -340,11 +341,15 @@
      ;; Set the frame width and height at startup
      (add-to-list 'default-frame-alist '(height . 50))
      (add-to-list 'default-frame-alist '(width . 130)) 
-
-     (global-linum-mode 1) ;; turn on line numbers
+     
+     ;; Display line numbers
+     (global-display-line-numbers-mode 1)
+     
      (global-visual-line-mode 1) 
      (global-hl-line-mode t) ;; to highlight current line
+     
      (ido-mode 1)
+     
      (electric-pair-mode 1) ;; mode to set mathching braces etc.
      ;; Enabling whitespace mode to detect crossing of 100 columns
      (setq-default
